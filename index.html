@@ -94,6 +94,7 @@
             padding: 1rem 0;
             transition: all 0.3s ease;
             box-shadow: var(--shadow-sm);
+            z-index: 1030;
         }
         
         .navbar.scrolled {
@@ -147,17 +148,20 @@
         
         /* Fix Navbar Toggler (Menu Hamburger) */
         .navbar-toggler {
-            border: none;
-            padding: 0.25rem 0.5rem;
+            border: 2px solid var(--secondary-blue);
+            padding: 0.375rem 0.75rem;
             font-size: 1.25rem;
             line-height: 1;
             background-color: transparent;
             border-radius: var(--radius-sm);
             transition: all 0.3s ease;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
         }
         
         .navbar-toggler:focus {
-            box-shadow: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
             outline: none;
         }
         
@@ -165,10 +169,18 @@
             width: 1.5em;
             height: 1.5em;
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2837, 99, 235, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100%;
         }
         
         .navbar-toggler:hover {
             background-color: rgba(37, 99, 235, 0.1);
+        }
+        
+        /* Navbar Collapse for Mobile */
+        .navbar-collapse {
+            transition: all 0.3s ease;
         }
         
         /* ===== HERO SECTION ===== */
@@ -807,14 +819,30 @@
             .navbar-collapse {
                 background: var(--white);
                 border-radius: var(--radius-md);
-                padding: 1rem;
+                padding: 1.5rem;
                 box-shadow: var(--shadow-lg);
                 margin-top: 1rem;
+                border: 1px solid #e2e8f0;
+            }
+            
+            .nav-link {
+                padding: 0.75rem 0 !important;
+                margin: 0.25rem 0;
+                border-bottom: 1px solid #f1f5f9;
+            }
+            
+            .nav-link:last-child {
+                border-bottom: none;
             }
             
             .nav-link::after {
                 left: 0;
                 right: 0;
+            }
+            
+            /* Make sure navbar toggler is visible */
+            .navbar-toggler {
+                display: flex !important;
             }
         }
         
@@ -833,10 +861,6 @@
             
             .navbar-brand {
                 font-size: 1.25rem;
-            }
-            
-            .nav-link {
-                padding: 0.75rem 0 !important;
             }
             
             .hero-image-container {
@@ -927,6 +951,27 @@
             
             .navbar-brand span {
                 font-size: 1.1rem;
+            }
+            
+            .navbar-toggler {
+                padding: 0.25rem 0.5rem;
+                font-size: 1.1rem;
+            }
+            
+            .navbar-toggler-icon {
+                width: 1.2em;
+                height: 1.2em;
+            }
+        }
+        
+        /* For very small screens */
+        @media (max-width: 400px) {
+            .navbar-brand span {
+                font-size: 1rem;
+            }
+            
+            .navbar-brand i {
+                font-size: 1.2rem;
             }
         }
         
@@ -1447,7 +1492,7 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <h3>Muhammad Akmal Abdillah</h3>
-                    <p>Junior Web Developer </p>
+                    <p>Junior Web Developer & SMK ADI SANGGORO Graduate</p>
                 </div>
                 
                 <div class="footer-social">
@@ -1515,7 +1560,9 @@
                         const navbarCollapse = document.querySelector('.navbar-collapse');
                         if (navbarCollapse.classList.contains('show')) {
                             const navbarToggler = document.querySelector('.navbar-toggler');
-                            navbarToggler.click();
+                            if (navbarToggler) {
+                                navbarToggler.click();
+                            }
                         }
                         
                         // Update active nav link
@@ -1678,13 +1725,40 @@
             // Re-animate on scroll
             window.addEventListener('scroll', animateSkillBars);
             
-            // Fix navbar toggler for mobile
+            // Fix for navbar toggler visibility
             const navbarToggler = document.querySelector('.navbar-toggler');
             if (navbarToggler) {
+                // Force display flex to ensure visibility
+                navbarToggler.style.display = 'flex !important';
+                
+                // Add event listener for toggle
                 navbarToggler.addEventListener('click', function() {
                     this.classList.toggle('collapsed');
+                    
+                    // Toggle icon animation
+                    const icon = this.querySelector('.navbar-toggler-icon');
+                    if (this.classList.contains('collapsed')) {
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        icon.style.transform = 'rotate(90deg)';
+                    }
                 });
             }
+            
+            // Add mobile-specific click handler for nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    // Close mobile menu after clicking a link
+                    const navbarCollapse = document.querySelector('.navbar-collapse');
+                    const navbarToggler = document.querySelector('.navbar-toggler');
+                    
+                    if (window.innerWidth < 992 && navbarCollapse.classList.contains('show')) {
+                        if (navbarToggler) {
+                            navbarToggler.click();
+                        }
+                    }
+                });
+            });
         });
     </script>
 </body>
