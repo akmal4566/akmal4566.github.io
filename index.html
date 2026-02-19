@@ -148,27 +148,52 @@
         /* Fix Navbar Toggler (Menu Hamburger) */
         .navbar-toggler {
             border: none;
-            padding: 0.25rem 0.5rem;
+            padding: 0.5rem 0.75rem;
             font-size: 1.25rem;
-            line-height: 1;
             background-color: transparent;
-            border-radius: var(--radius-sm);
             transition: all 0.3s ease;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            min-width: 44px;
+            min-height: 44px;
+            cursor: pointer;
+            z-index: 1001;
         }
         
         .navbar-toggler:focus {
             box-shadow: none;
             outline: none;
+            background-color: rgba(37, 99, 235, 0.1);
         }
         
         .navbar-toggler-icon {
             width: 1.5em;
             height: 1.5em;
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2837, 99, 235, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+            display: inline-block !important;
+            transition: all 0.3s ease;
         }
         
         .navbar-toggler:hover {
             background-color: rgba(37, 99, 235, 0.1);
+        }
+        
+        .navbar-toggler:active {
+            background-color: rgba(37, 99, 235, 0.2);
+        }
+        
+        .navbar-toggler:hover .navbar-toggler-icon {
+            transform: scale(1.1);
+        }
+        
+        /* Ensure hamburger menu is always visible on mobile */
+        @media (max-width: 991.98px) {
+            .navbar-toggler {
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
         }
         
         /* ===== HERO SECTION ===== */
@@ -785,26 +810,20 @@
                 padding-top: 70px;
             }
             
-            .section {
-                padding: 4rem 0;
+            .display-1 {
+                font-size: 3rem;
             }
             
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 3rem;
+            .display-2 {
+                font-size: 2.25rem;
             }
             
-            .about-image {
-                max-width: 350px;
+            .lead {
+                font-size: 1.125rem;
             }
             
-            .hero-buttons {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .social-links {
-                margin-top: 1.5rem;
+            .navbar-brand {
+                font-size: 1.25rem;
             }
             
             /* Navbar Mobile Fix */
@@ -814,6 +833,21 @@
                 padding: 1rem;
                 box-shadow: var(--shadow-lg);
                 margin-top: 1rem;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+            }
+            
+            .navbar-nav {
+                text-align: center;
+                width: 100%;
+            }
+            
+            .nav-link {
+                padding: 0.75rem 0 !important;
+                font-size: 1rem;
             }
             
             .nav-link::after {
@@ -932,11 +966,32 @@
             .navbar-brand span {
                 font-size: 1.1rem;
             }
+            
+            /* Extra small screens hamburger menu fix */
+            .navbar-toggler {
+                padding: 0.75rem;
+                min-width: 48px;
+                min-height: 48px;
+            }
+            
+            .navbar-toggler-icon {
+                width: 1.25em;
+                height: 1.25em;
+            }
+            
+            .navbar-collapse {
+                margin-top: 0.5rem;
+                padding: 0.75rem;
+                border-radius: var(--radius-sm);
+            }
+            
+            .nav-link {
+                font-size: 0.95rem;
+                padding: 0.625rem 0 !important;
+            }
         }
         
         /* ===== UTILITY CLASSES ===== */
-        .mb-0 { margin-bottom: 0 !important; }
-        .mb-1 { margin-bottom: 0.25rem !important; }
         .mb-2 { margin-bottom: 0.5rem !important; }
         .mb-3 { margin-bottom: 1rem !important; }
         .mb-4 { margin-bottom: 1.5rem !important; }
