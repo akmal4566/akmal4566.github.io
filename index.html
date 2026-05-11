@@ -90,6 +90,11 @@
             padding: 1rem 0;
             transition: all 0.3s ease;
             box-shadow: var(--shadow-sm);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
         }
 
         .navbar.scrolled {
@@ -108,128 +113,7 @@
             text-decoration: none;
         }
 
-        .navbar-brand i { color: var(--secondary-blue); }
-
-        /* ===== HAMBURGER MENU - FIXED ===== */
-        .navbar-toggler {
-            border: 2px solid rgba(37,99,235,0.25);
-            border-radius: var(--radius-sm);
-            padding: 0;
-            background: transparent;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            outline: none !important;
-            box-shadow: none !important;
-            width: 44px;
-            height: 44px;
-            display: flex !important;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1050;
-        }
-
-        .navbar-toggler:focus {
-            box-shadow: 0 0 0 3px rgba(37,99,235,0.15) !important;
-            border-color: var(--secondary-blue);
-        }
-
-        .navbar-toggler:hover {
-            background: rgba(37,99,235,0.07);
-            border-color: var(--secondary-blue);
-        }
-
-        .hamburger-icon {
-            width: 22px;
-            height: 16px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            pointer-events: none;
-        }
-
-        .hamburger-icon span {
-            display: block;
-            height: 2px;
-            width: 100%;
-            background: var(--secondary-blue);
-            border-radius: 2px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-origin: center;
-        }
-
-        .navbar-toggler[aria-expanded="true"] .hamburger-icon span:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
-        }
-
-        .navbar-toggler[aria-expanded="true"] .hamburger-icon span:nth-child(2) {
-            opacity: 0;
-            transform: scaleX(0);
-        }
-
-        .navbar-toggler[aria-expanded="true"] .hamburger-icon span:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
-        }
-
-        /* Mobile Navbar Collapse Fix */
-        @media (max-width: 991.98px) {
-            body { padding-top: 70px; }
-            
-            .navbar-collapse {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: var(--white);
-                z-index: 1040;
-                padding-top: 80px;
-                transform: translateX(100%);
-                transition: transform 0.3s ease-in-out;
-                margin-top: 0;
-                border-radius: 0;
-                box-shadow: none;
-                border: none;
-                width: 280px;
-                right: auto;
-                box-shadow: var(--shadow-lg);
-            }
-            
-            .navbar-collapse.show {
-                transform: translateX(0);
-            }
-            
-            .navbar-nav {
-                padding: 1rem;
-                height: 100%;
-                overflow-y: auto;
-            }
-            
-            .nav-link {
-                padding: 1rem !important;
-                font-size: 1.1rem;
-                border-bottom: 1px solid #e2e8f0;
-            }
-            
-            .menu-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0,0,0,0.5);
-                z-index: 1030;
-                display: none;
-            }
-            
-            .menu-overlay.show {
-                display: block;
-            }
-        }
-
-        /* ===== NAV LINKS ===== */
+        /* ===== NAV LINKS (Desktop) ===== */
         .nav-link {
             font-weight: 500;
             color: var(--text-dark) !important;
@@ -260,6 +144,166 @@
             .nav-link:hover::after,
             .nav-link.active::after {
                 transform: scaleX(1);
+            }
+        }
+
+        /* ===== HAMBURGER BUTTON - HANYA MUNCUL DI MOBILE ===== */
+        .navbar-toggler {
+            display: none !important; /* sembunyikan default bootstrap toggler */
+        }
+
+        /* Tombol hamburger custom kita */
+        #hamburgerBtn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            border: 2px solid rgba(37,99,235,0.25);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            outline: none;
+            flex-shrink: 0;
+        }
+
+        #hamburgerBtn:focus {
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+            border-color: var(--secondary-blue);
+        }
+
+        #hamburgerBtn:hover {
+            background: rgba(37,99,235,0.07);
+            border-color: var(--secondary-blue);
+        }
+
+        @media (max-width: 991.98px) {
+            #hamburgerBtn {
+                display: flex;
+            }
+        }
+
+        .hamburger-icon {
+            width: 22px;
+            height: 16px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--secondary-blue);
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+
+        #hamburgerBtn.is-open .hamburger-icon span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        #hamburgerBtn.is-open .hamburger-icon span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        #hamburgerBtn.is-open .hamburger-icon span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* ===== MOBILE MENU OVERLAY ===== */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1040;
+        }
+
+        .menu-overlay.show {
+            display: block;
+        }
+
+        /* ===== MOBILE SIDEBAR MENU ===== */
+        #mobileMenu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 280px;
+            background: var(--white);
+            z-index: 1050;
+            padding-top: 80px;
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-lg);
+            overflow-y: auto;
+        }
+
+        #mobileMenu.show {
+            transform: translateX(0);
+        }
+
+        #mobileMenu .mobile-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #mobileMenu .mobile-nav-list li a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-bottom: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+
+        #mobileMenu .mobile-nav-list li a:hover,
+        #mobileMenu .mobile-nav-list li a.active {
+            color: var(--secondary-blue);
+            background: rgba(37,99,235,0.05);
+            padding-left: 2rem;
+        }
+
+        #mobileMenu .mobile-nav-list li a i {
+            width: 20px;
+            text-align: center;
+            color: var(--secondary-blue);
+            font-size: 0.9rem;
+        }
+
+        /* ===== BODY LOCK saat menu terbuka ===== */
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        /* ===== DESKTOP: navbar-collapse biasa ===== */
+        @media (min-width: 992px) {
+            body { padding-top: 80px; }
+            #mobileMenu { display: none !important; }
+            .menu-overlay { display: none !important; }
+        }
+
+        @media (max-width: 991.98px) {
+            body { padding-top: 70px; }
+            
+            /* Sembunyikan navbar-collapse bootstrap di mobile (kita pakai sidebar custom) */
+            .navbar-collapse {
+                display: none !important;
             }
         }
 
@@ -300,6 +344,7 @@
             margin-bottom: 1.5rem;
         }
 
+        /* ===== FIX 1: HERO IMAGE - object-position top supaya muka & rambut terlihat ===== */
         .hero-image-container {
             position: relative;
             max-width: 340px;
@@ -316,7 +361,7 @@
             border: 8px solid var(--white);
             aspect-ratio: 1/1;
             object-fit: cover;
-            object-position: 50% 30%;
+            object-position: 50% 15%; /* FIX: naik ke atas supaya muka & rambut kelihatan */
         }
 
         .hero-shape {
@@ -411,6 +456,7 @@
         /* ===== ABOUT ===== */
         #about { background: var(--bg-light); }
 
+        /* FIX 1: ABOUT IMAGE juga disamakan object-position */
         .about-image {
             position: relative;
             max-width: 370px;
@@ -425,7 +471,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: 50% 30%;
+            object-position: 50% 15%; /* FIX: naik ke atas supaya muka & rambut kelihatan */
             transition: transform 0.5s ease;
             display: block;
         }
@@ -823,11 +869,8 @@
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .section { padding: 4rem 0; }
-
             .hero-image-container { max-width: 250px; margin: 2rem auto 0; }
-
             .contact-form, .contact-info-box { padding: 1.75rem; }
-
             .timeline::before { left: 15px; }
             .timeline-item { padding-left: 50px; }
             .timeline-dot { left: 8px; }
@@ -844,46 +887,66 @@
             }
 
             .filter-btn { padding: 0.35rem 0.9rem; font-size: 0.8rem; }
-
             .back-to-top { width: 40px; height: 40px; bottom: 1.25rem; right: 1.25rem; }
         }
 
         .portfolio-item {
             transition: all 0.4s ease;
         }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .divider {
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--secondary-blue), var(--light-blue));
+            border-radius: 2px;
+            margin: 0.75rem auto 0;
+        }
+
+        .section { padding: 5rem 0; }
     </style>
 </head>
 <body>
+
+    <!-- ===== OVERLAY untuk menutup menu mobile ===== -->
     <div class="menu-overlay" id="menuOverlay"></div>
-    
+
+    <!-- ===== MOBILE SIDEBAR MENU ===== -->
+    <nav id="mobileMenu" aria-label="Mobile Navigation">
+        <ul class="mobile-nav-list">
+            <li><a href="#hero" class="mobile-nav-link active"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#about" class="mobile-nav-link"><i class="fas fa-user"></i> About</a></li>
+            <li><a href="#skills" class="mobile-nav-link"><i class="fas fa-code"></i> Skills</a></li>
+            <li><a href="#experience" class="mobile-nav-link"><i class="fas fa-briefcase"></i> Experience</a></li>
+            <li><a href="#portfolio" class="mobile-nav-link"><i class="fas fa-folder-open"></i> Portfolio</a></li>
+            <li><a href="#contact" class="mobile-nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+    </nav>
+
     <!-- ===== NAVBAR ===== -->
-    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
-        <div class="container">
+    <nav class="navbar" id="mainNav">
+        <div class="container d-flex align-items-center justify-content-between">
             <a class="navbar-brand" href="#hero">
                 <span>Muhammad Akmal Abdillah</span>
             </a>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="#hero">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
-            </div>
+            <!-- Desktop nav links -->
+            <ul class="navbar-nav d-none d-lg-flex flex-row ms-auto mb-0">
+                <li class="nav-item"><a class="nav-link active" href="#hero">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+                <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+            </ul>
 
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-                id="hamburgerBtn"
-            >
+            <!-- Hamburger button - hanya muncul di mobile (<992px) -->
+            <button id="hamburgerBtn" aria-label="Buka menu navigasi" aria-expanded="false">
                 <span class="hamburger-icon">
                     <span></span>
                     <span></span>
@@ -911,7 +974,20 @@
                             Passionate about creating functional and user-friendly web applications.
                         </p>
                         <div class="d-flex flex-wrap align-items-center gap-3">
-                            <a href="cv_akmal_terbaru.pdf" class="btn-primary-custom" id="downloadCVBtn" download="cv_akmal_terbaru.pdf">
+                            <!-- 
+                                FIX 2: Download CV
+                                - Nama file diubah ke cv_akmal_baru.pdf
+                                - Pakai <a> tag biasa (bukan button) supaya download bekerja di semua perangkat
+                                - Tambah atribut download dan href yang benar
+                                - type="application/pdf" membantu browser/mobile mengenali file
+                            -->
+                            <a 
+                                href="cv_akmal_baru.pdf" 
+                                class="btn-primary-custom" 
+                                id="downloadCVBtn"
+                                download="CV_Muhammad_Akmal_Abdillah.pdf"
+                                type="application/pdf"
+                            >
                                 <i class="fas fa-download"></i>
                                 Download CV
                             </a>
@@ -934,7 +1010,13 @@
                 <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
                     <div class="hero-image-container">
                         <div class="hero-shape"></div>
-                        <img src="images/muhammad_akmal.png" alt="Muhammad Akmal Abdillah" class="hero-image" id="profileImg" onerror="this.src='https://ui-avatars.com/api/?background=2563eb&color=fff&name=Akmal&length=4&size=300&font-size=0.33'">
+                        <img 
+                            src="images/muhammad_akmal.png" 
+                            alt="Muhammad Akmal Abdillah" 
+                            class="hero-image" 
+                            id="profileImg" 
+                            onerror="this.src='https://ui-avatars.com/api/?background=2563eb&color=fff&name=Akmal&length=4&size=300&font-size=0.33'"
+                        >
                     </div>
                 </div>
             </div>
@@ -952,7 +1034,11 @@
             <div class="row align-items-center g-5">
                 <div class="col-lg-5 col-md-6" data-aos="fade-right">
                     <div class="about-image">
-                        <img src="images/muhammad_akmal.png" alt="About Muhammad Akmal Abdillah" onerror="this.src='https://ui-avatars.com/api/?background=2563eb&color=fff&name=Akmal&length=4&size=370&font-size=0.33'">
+                        <img 
+                            src="images/muhammad_akmal.png" 
+                            alt="About Muhammad Akmal Abdillah" 
+                            onerror="this.src='https://ui-avatars.com/api/?background=2563eb&color=fff&name=Akmal&length=4&size=370&font-size=0.33'"
+                        >
                     </div>
                 </div>
                 <div class="col-lg-7 col-md-6" data-aos="fade-left" data-aos-delay="100">
@@ -1268,107 +1354,118 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
+    <!-- Bootstrap JS (tetap di-load untuk komponen lain) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // ===== AOS INIT =====
             AOS.init({
                 duration: 750,
                 easing: 'ease-out',
                 once: true,
-                offset: 80,
-                disable: false
+                offset: 80
             });
 
-            // ===== FIXED HAMBURGER MENU =====
-            const navbarToggler = document.querySelector('.navbar-toggler');
-            const navbarCollapse = document.getElementById('navbarNav');
+            // ===== FIX 3: HAMBURGER MENU MOBILE =====
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
             const menuOverlay = document.getElementById('menuOverlay');
-            
-            if (navbarToggler && navbarCollapse) {
-                function closeMenu() {
-                    if (navbarCollapse.classList.contains('show')) {
-                        const bsCollapse = bootstrap.Collapse.getOrCreateInstance(navbarCollapse);
-                        bsCollapse.hide();
-                    }
-                    document.body.style.overflow = '';
-                    if (menuOverlay) menuOverlay.classList.remove('show');
+
+            function openMenu() {
+                hamburgerBtn.classList.add('is-open');
+                hamburgerBtn.setAttribute('aria-expanded', 'true');
+                mobileMenu.classList.add('show');
+                menuOverlay.classList.add('show');
+                document.body.classList.add('menu-open');
+            }
+
+            function closeMenu() {
+                hamburgerBtn.classList.remove('is-open');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                mobileMenu.classList.remove('show');
+                menuOverlay.classList.remove('show');
+                document.body.classList.remove('menu-open');
+            }
+
+            function toggleMenu() {
+                if (mobileMenu.classList.contains('show')) {
+                    closeMenu();
+                } else {
+                    openMenu();
                 }
-                
-                navbarToggler.addEventListener('click', function() {
-                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
-                    if (!isExpanded) {
-                        document.body.style.overflow = 'hidden';
-                        if (menuOverlay) menuOverlay.classList.add('show');
-                    } else {
-                        closeMenu();
-                    }
-                });
-                
-                if (menuOverlay) {
-                    menuOverlay.addEventListener('click', closeMenu);
-                }
-                
-                const navLinks = document.querySelectorAll('.nav-link');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        closeMenu();
-                    });
-                });
-                
-                navbarCollapse.addEventListener('hidden.bs.collapse', function() {
-                    document.body.style.overflow = '';
-                    if (menuOverlay) menuOverlay.classList.remove('show');
+            }
+
+            if (hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    toggleMenu();
                 });
             }
 
+            // Tutup menu saat klik overlay
+            if (menuOverlay) {
+                menuOverlay.addEventListener('click', closeMenu);
+            }
+
+            // Tutup menu saat klik salah satu link di mobile menu
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            mobileNavLinks.forEach(function (link) {
+                link.addEventListener('click', function () {
+                    closeMenu();
+                });
+            });
+
+            // Tutup menu saat tekan Escape
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeMenu();
+            });
+
             // ===== NAVBAR SCROLL =====
-            const navbar = document.querySelector('.navbar');
+            const navbar = document.getElementById('mainNav');
             window.addEventListener('scroll', function () {
                 if (navbar) {
                     navbar.classList.toggle('scrolled', window.scrollY > 50);
                 }
             }, { passive: true });
 
-            // ===== SMOOTH SCROLL =====
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            // ===== SMOOTH SCROLL (untuk semua link #...) =====
+            document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
                 anchor.addEventListener('click', function (e) {
-                    const targetId = this.getAttribute('href');
+                    var targetId = this.getAttribute('href');
                     if (!targetId || targetId === '#') return;
-
-                    const targetEl = document.querySelector(targetId);
+                    var targetEl = document.querySelector(targetId);
                     if (!targetEl) return;
-
                     e.preventDefault();
-
-                    const navHeight = navbar ? navbar.offsetHeight : 70;
-                    const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - navHeight - 10;
+                    var navHeight = navbar ? navbar.offsetHeight : 70;
+                    var targetTop = targetEl.getBoundingClientRect().top + window.scrollY - navHeight - 10;
                     window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
                 });
             });
 
             // ===== ACTIVE NAV HIGHLIGHT =====
-            const sections = document.querySelectorAll('section[id]');
-            const navLinkItems = document.querySelectorAll('.nav-link');
+            var sections = document.querySelectorAll('section[id]');
+            var desktopNavLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            var mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
             function setActiveNav() {
-                let current = '';
-                const scrollPos = window.scrollY + 150;
-                sections.forEach(sec => {
-                    const secTop = sec.offsetTop;
-                    const secBottom = secTop + sec.offsetHeight;
+                var current = '';
+                var scrollPos = window.scrollY + 150;
+                sections.forEach(function (sec) {
+                    var secTop = sec.offsetTop;
+                    var secBottom = secTop + sec.offsetHeight;
                     if (scrollPos >= secTop && scrollPos < secBottom) {
                         current = sec.getAttribute('id');
                     }
                 });
-                navLinkItems.forEach(link => {
-                    const href = link.getAttribute('href');
-                    if (href === '#' + current) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
+
+                desktopNavLinks.forEach(function (link) {
+                    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+                });
+
+                mobileLinks.forEach(function (link) {
+                    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
                 });
             }
 
@@ -1376,7 +1473,7 @@
             setActiveNav();
 
             // ===== BACK TO TOP =====
-            const backToTopBtn = document.getElementById('backToTop');
+            var backToTopBtn = document.getElementById('backToTop');
             if (backToTopBtn) {
                 window.addEventListener('scroll', function () {
                     backToTopBtn.classList.toggle('show', window.scrollY > 500);
@@ -1388,43 +1485,34 @@
             }
 
             // ===== PORTFOLIO FILTER =====
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            var filterBtns = document.querySelectorAll('.filter-btn');
+            var portfolioItems = document.querySelectorAll('.portfolio-item');
 
-            if (filterBtns.length && portfolioItems.length) {
-                filterBtns.forEach(btn => {
-                    btn.addEventListener('click', function () {
-                        filterBtns.forEach(b => b.classList.remove('active'));
-                        this.classList.add('active');
+            filterBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    filterBtns.forEach(function (b) { b.classList.remove('active'); });
+                    this.classList.add('active');
 
-                        const filter = this.getAttribute('data-filter');
-                        portfolioItems.forEach(item => {
-                            const cats = item.getAttribute('data-category').toLowerCase().split(' ');
-                            if (filter === 'all' || cats.includes(filter)) {
-                                item.style.display = '';
-                            } else {
-                                item.style.display = 'none';
-                            }
-                        });
+                    var filter = this.getAttribute('data-filter');
+                    portfolioItems.forEach(function (item) {
+                        var cats = item.getAttribute('data-category').toLowerCase().split(' ');
+                        item.style.display = (filter === 'all' || cats.includes(filter)) ? '' : 'none';
                     });
                 });
-            }
+            });
 
             // ===== SKILL BAR ANIMATION =====
-            const skillBars = document.querySelectorAll('.skill-progress');
-            let skillsAnimated = false;
+            var skillBars = document.querySelectorAll('.skill-progress');
 
             function animateSkills() {
-                if (skillsAnimated) return;
-                
-                skillBars.forEach(bar => {
+                skillBars.forEach(function (bar) {
                     if (bar.classList.contains('animated')) return;
-                    const card = bar.closest('.skill-card');
+                    var card = bar.closest('.skill-card');
                     if (!card) return;
-                    const rect = card.getBoundingClientRect();
+                    var rect = card.getBoundingClientRect();
                     if (rect.top < window.innerHeight - 50 && rect.bottom > 0) {
-                        setTimeout(() => {
-                            const width = bar.getAttribute('data-width');
+                        setTimeout(function () {
+                            var width = bar.getAttribute('data-width');
                             if (width) {
                                 bar.style.width = width + '%';
                                 bar.classList.add('animated');
@@ -1432,43 +1520,40 @@
                         }, 100);
                     }
                 });
-                
-                const allAnimated = Array.from(skillBars).every(bar => bar.classList.contains('animated'));
-                if (allAnimated) skillsAnimated = true;
             }
 
-            setTimeout(animateSkills, 200);
+            setTimeout(animateSkills, 300);
             window.addEventListener('scroll', animateSkills, { passive: true });
 
-            function isValidEmail(email) {
-                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-            }
-
-            // ===== MAIN CONTACT FORM =====
-            const contactForm = document.getElementById('contactForm');
-            const submitBtn = document.getElementById('submitBtn');
-            const formStatus = document.getElementById('formStatus');
+            // ===== CONTACT FORM =====
+            var contactForm = document.getElementById('contactForm');
+            var submitBtn = document.getElementById('submitBtn');
+            var formStatus = document.getElementById('formStatus');
 
             function showStatus(msg, type) {
                 if (!formStatus) return;
                 formStatus.className = type;
                 formStatus.style.display = 'block';
                 formStatus.innerHTML = (type === 'success')
-                    ? `<i class="fas fa-check-circle me-2"></i>${msg}`
-                    : `<i class="fas fa-exclamation-circle me-2"></i>${msg}`;
-                setTimeout(() => {
+                    ? '<i class="fas fa-check-circle me-2"></i>' + msg
+                    : '<i class="fas fa-exclamation-circle me-2"></i>' + msg;
+                setTimeout(function () {
                     formStatus.style.display = 'none';
                 }, 5000);
             }
 
+            function isValidEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+
             if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
+                contactForm.addEventListener('submit', function (e) {
                     e.preventDefault();
 
-                    const name = document.getElementById('name').value.trim();
-                    const email = document.getElementById('email').value.trim();
-                    const subject = document.getElementById('subject').value.trim();
-                    const message = document.getElementById('message').value.trim();
+                    var name = document.getElementById('name').value.trim();
+                    var email = document.getElementById('email').value.trim();
+                    var subject = document.getElementById('subject').value.trim();
+                    var message = document.getElementById('message').value.trim();
 
                     if (!name || !email || !subject || !message) {
                         showStatus('Harap isi semua kolom sebelum mengirim pesan.', 'error');
@@ -1480,17 +1565,16 @@
                         return;
                     }
 
-                    const originalHTML = submitBtn.innerHTML;
+                    var originalHTML = submitBtn.innerHTML;
                     submitBtn.innerHTML = '<span class="loading-spinner"></span>Sending...';
                     submitBtn.disabled = true;
 
-                    const fullMessage = `Name: ${name}\nEmail: ${email}\n\nSubject: ${subject}\n\nMessage:\n${message}`;
-                    const mailtoLink = `mailto:akmalabdillah987@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(fullMessage)}`;
-                    
+                    var fullMessage = 'Name: ' + name + '\nEmail: ' + email + '\n\nSubject: ' + subject + '\n\nMessage:\n' + message;
+                    var mailtoLink = 'mailto:akmalabdillah987@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(fullMessage);
                     window.location.href = mailtoLink;
-                    
-                    setTimeout(() => {
-                        showStatus(`Terima kasih ${name}! Email client akan terbuka. Kirim pesan ke akmalabdillah987@gmail.com`, 'success');
+
+                    setTimeout(function () {
+                        showStatus('Terima kasih ' + name + '! Email client akan terbuka. Kirim pesan ke akmalabdillah987@gmail.com', 'success');
                         contactForm.reset();
                         submitBtn.innerHTML = originalHTML;
                         submitBtn.disabled = false;
@@ -1498,16 +1582,7 @@
                 });
             }
 
-            // ===== DOWNLOAD CV =====
-            const downloadBtn = document.getElementById('downloadCVBtn');
-            if (downloadBtn) {
-                downloadBtn.addEventListener('click', function(e) {
-                    // Biarkan default download behavior karena sudah ada atribut download
-                    console.log('Downloading CV...');
-                });
-            }
-
-            setTimeout(() => AOS.refresh(), 100);
+            setTimeout(function () { AOS.refresh(); }, 100);
         });
     </script>
 </body>
