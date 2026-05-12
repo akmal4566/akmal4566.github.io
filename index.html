@@ -2,7 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#2563eb">
     <title>Muhammad Akmal Abdillah - Portfolio</title>
     
     <!-- Bootstrap 5 CSS -->
@@ -20,7 +21,13 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
-        /* ===== VARIABLES ===== */
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
             --primary-blue: #1e3a8a;
             --secondary-blue: #2563eb;
@@ -37,83 +44,70 @@
             --radius-lg: 16px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            width: 100%;
+        }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             color: var(--text-dark);
             line-height: 1.6;
-            padding-top: 80px;
+            padding-top: 70px;
             overflow-x: hidden;
             background-color: var(--white);
+            width: 100%;
+            position: relative;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-        }
-
-        /* ===== TYPOGRAPHY ===== */
-        .hero-title {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-        }
-
-        .section-heading {
-            font-size: clamp(1.75rem, 4vw, 2.5rem);
-        }
-
-        .lead {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            font-weight: 400;
-            color: var(--text-gray);
-        }
-
-        .text-gradient {
-            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* ===== NAVBAR ===== */
+        /* ===== NAVBAR FIXED TOP WITH BETTER MOBILE ===== */
         .navbar {
-            background: rgba(255,255,255,0.97) !important;
+            background: rgba(255,255,255,0.98) !important;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(0,0,0,0.06);
-            padding: 1rem 0;
+            padding: 0.75rem 0;
             transition: all 0.3s ease;
             box-shadow: var(--shadow-sm);
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
+            z-index: 1030;
+            width: 100%;
         }
 
         .navbar.scrolled {
-            padding: 0.7rem 0;
+            padding: 0.5rem 0;
             box-shadow: var(--shadow-md);
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 1.25rem;
         }
 
         .navbar-brand {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: clamp(0.9rem, 2.5vw, 1.35rem);
+            font-size: clamp(0.9rem, 4vw, 1.2rem);
             color: var(--primary-blue) !important;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
             text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 60%;
         }
 
-        /* Desktop nav links */
+        /* Desktop Nav */
+        .navbar-nav {
+            margin-left: auto;
+        }
+
         .navbar-nav .nav-link {
             font-weight: 500;
             color: var(--text-dark) !important;
@@ -146,11 +140,7 @@
             }
         }
 
-        /* ===== HAMBURGER BUTTON - CUSTOM ===== */
-        .navbar-toggler {
-            display: none !important;
-        }
-
+        /* ===== HAMBURGER BUTTON - selalu di kanan ===== */
         #hamburgerBtn {
             display: none;
             align-items: center;
@@ -164,6 +154,7 @@
             transition: all 0.25s ease;
             outline: none;
             flex-shrink: 0;
+            margin-left: auto;
         }
 
         #hamburgerBtn:focus {
@@ -237,10 +228,10 @@
             top: 0;
             right: 0;
             bottom: 0;
-            width: 280px;
+            width: min(280px, 75%);
             background: var(--white);
             z-index: 1050;
-            padding-top: 80px;
+            padding-top: 70px;
             transform: translateX(100%);
             transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: var(--shadow-lg);
@@ -287,6 +278,8 @@
         /* ===== BODY LOCK ===== */
         body.menu-open {
             overflow: hidden;
+            position: fixed;
+            width: 100%;
         }
 
         /* Desktop: sembunyikan mobile menu */
@@ -294,22 +287,48 @@
             body { padding-top: 80px; }
             #mobileMenu { display: none !important; }
             .menu-overlay { display: none !important; }
+            .navbar-collapse {
+                display: flex !important;
+            }
         }
 
         @media (max-width: 991.98px) {
-            body { padding-top: 70px; }
-            /* Sembunyikan navbar-collapse bootstrap di mobile */
+            body { padding-top: 65px; }
             .navbar-collapse {
                 display: none !important;
             }
         }
 
+        /* ===== TYPOGRAPHY ===== */
+        .hero-title {
+            font-size: clamp(1.75rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .section-heading {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+        }
+
+        .lead {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            font-weight: 400;
+            color: var(--text-gray);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         /* ===== HERO ===== */
         #hero {
-            min-height: 90vh;
+            min-height: 85vh;
             display: flex;
             align-items: center;
-            padding: 4rem 0;
+            padding: 3rem 0;
             background: linear-gradient(135deg, #f8fafc 0%, #ffffff 60%);
             position: relative;
             overflow: hidden;
@@ -334,17 +353,17 @@
             gap: 0.5rem;
             background: rgba(37,99,235,0.1);
             color: var(--secondary-blue);
-            padding: 0.45rem 1rem;
+            padding: 0.4rem 1rem;
             border-radius: 50px;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             font-weight: 500;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
 
         .hero-image-container {
             position: relative;
-            max-width: 340px;
-            margin: 0 auto;
+            max-width: 300px;
+            margin: 1rem auto 0;
         }
 
         .hero-image {
@@ -354,7 +373,7 @@
             box-shadow: var(--shadow-lg);
             position: relative;
             z-index: 2;
-            border: 8px solid var(--white);
+            border: 6px solid var(--white);
             aspect-ratio: 1/1;
             object-fit: cover;
             object-position: 50% 15%;
@@ -377,10 +396,10 @@
             background: linear-gradient(135deg, var(--secondary-blue), var(--light-blue));
             color: var(--white);
             border: none;
-            padding: 0.85rem 1.85rem;
+            padding: 0.7rem 1.5rem;
             border-radius: var(--radius-sm);
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.9rem;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
@@ -400,10 +419,10 @@
             background: transparent;
             color: var(--secondary-blue);
             border: 2px solid var(--secondary-blue);
-            padding: 0.85rem 1.85rem;
+            padding: 0.7rem 1.5rem;
             border-radius: var(--radius-sm);
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.9rem;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
@@ -421,21 +440,21 @@
         /* ===== SOCIAL LINKS ===== */
         .social-links {
             display: flex;
-            gap: 0.85rem;
-            margin-top: 2rem;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
             flex-wrap: wrap;
         }
 
         .social-link {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: var(--white);
             color: var(--text-dark);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
             border: 1px solid #e2e8f0;
             text-decoration: none;
@@ -454,7 +473,7 @@
 
         .about-image {
             position: relative;
-            max-width: 370px;
+            max-width: 320px;
             margin: 0 auto;
             border-radius: 50%;
             overflow: hidden;
@@ -473,27 +492,28 @@
 
         .about-image:hover img { transform: scale(1.05); }
 
-        .about-text h3 { color: var(--primary-blue); margin-bottom: 1.25rem; }
+        .about-text h3 { color: var(--primary-blue); margin-bottom: 1rem; font-size: 1.5rem; }
 
-        .about-text p { color: var(--text-gray); margin-bottom: 1.25rem; }
+        .about-text p { color: var(--text-gray); margin-bottom: 1rem; font-size: 0.95rem; }
 
-        .about-list { list-style: none; padding: 0; margin-bottom: 2rem; }
+        .about-list { list-style: none; padding: 0; margin-bottom: 1.5rem; }
 
         .about-list li {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            margin-bottom: 0.7rem;
+            margin-bottom: 0.6rem;
             color: var(--text-dark);
+            font-size: 0.9rem;
         }
 
-        .about-list i { color: var(--secondary-blue); font-size: 0.9rem; flex-shrink: 0; }
+        .about-list i { color: var(--secondary-blue); font-size: 0.85rem; flex-shrink: 0; }
 
         /* ===== SKILLS ===== */
         .skill-card {
             background: var(--white);
             border-radius: var(--radius-md);
-            padding: 1.75rem;
+            padding: 1.5rem;
             text-align: center;
             transition: all 0.3s ease;
             border: 1px solid #e2e8f0;
@@ -501,35 +521,35 @@
         }
 
         .skill-card:hover {
-            transform: translateY(-7px);
+            transform: translateY(-5px);
             box-shadow: var(--shadow-lg);
             border-color: var(--secondary-blue);
         }
 
         .skill-icon {
-            width: 64px;
-            height: 64px;
+            width: 55px;
+            height: 55px;
             background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(59,130,246,0.05));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.25rem;
+            margin: 0 auto 1rem;
             color: var(--secondary-blue);
-            font-size: 1.75rem;
+            font-size: 1.5rem;
         }
 
-        .skill-info h4 { color: var(--primary-blue); margin-bottom: 0.4rem; }
+        .skill-info h4 { color: var(--primary-blue); margin-bottom: 0.3rem; font-size: 1rem; }
 
-        .skill-info p { color: var(--text-gray); font-size: 0.875rem; margin-bottom: 1rem; }
+        .skill-info p { color: var(--text-gray); font-size: 0.75rem; margin-bottom: 0.75rem; }
 
         .skill-bar {
-            height: 6px;
+            height: 5px;
             background: #e2e8f0;
             border-radius: 3px;
             overflow: hidden;
             width: 100%;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.3rem;
         }
 
         .skill-progress {
@@ -545,7 +565,7 @@
             text-align: right;
             font-weight: 600;
             color: var(--secondary-blue);
-            font-size: 0.875rem;
+            font-size: 0.75rem;
         }
 
         /* ===== TIMELINE ===== */
@@ -558,7 +578,7 @@
         .timeline::before {
             content: '';
             position: absolute;
-            left: 30px;
+            left: 25px;
             top: 0;
             bottom: 0;
             width: 2px;
@@ -567,18 +587,18 @@
 
         .timeline-item {
             position: relative;
-            padding-left: 75px;
-            margin-bottom: 2.5rem;
+            padding-left: 65px;
+            margin-bottom: 2rem;
         }
 
         .timeline-item:last-child { margin-bottom: 0; }
 
         .timeline-dot {
             position: absolute;
-            left: 22px;
-            top: 14px;
-            width: 18px;
-            height: 18px;
+            left: 18px;
+            top: 12px;
+            width: 16px;
+            height: 16px;
             background: var(--secondary-blue);
             border-radius: 50%;
             border: 3px solid var(--white);
@@ -590,31 +610,31 @@
             display: inline-block;
             background: rgba(37,99,235,0.1);
             color: var(--secondary-blue);
-            padding: 0.3rem 0.8rem;
+            padding: 0.2rem 0.7rem;
             border-radius: 50px;
             font-weight: 600;
-            font-size: 0.8rem;
-            margin-bottom: 0.65rem;
+            font-size: 0.7rem;
+            margin-bottom: 0.5rem;
         }
 
         .timeline-content {
             background: var(--white);
             border-radius: var(--radius-md);
-            padding: 1.5rem;
+            padding: 1.2rem;
             box-shadow: var(--shadow-md);
             border: 1px solid #e2e8f0;
         }
 
-        .timeline-content h4 { color: var(--primary-blue); margin-bottom: 0.25rem; }
+        .timeline-content h4 { color: var(--primary-blue); margin-bottom: 0.2rem; font-size: 1.1rem; }
 
         .timeline-content h5 {
             color: var(--secondary-blue);
             font-weight: 500;
-            font-size: 0.9rem;
-            margin-bottom: 0.85rem;
+            font-size: 0.8rem;
+            margin-bottom: 0.6rem;
         }
 
-        .timeline-content p { color: var(--text-gray); margin-bottom: 0.85rem; font-size: 0.95rem; }
+        .timeline-content p { color: var(--text-gray); margin-bottom: 0.6rem; font-size: 0.85rem; }
 
         /* ===== PORTFOLIO ===== */
         #portfolio { background: var(--bg-light); }
@@ -624,18 +644,19 @@
             justify-content: center;
             gap: 0.5rem;
             flex-wrap: wrap;
+            margin-bottom: 2rem;
         }
 
         .filter-btn {
             background: transparent;
             color: var(--text-gray);
             border: 1px solid #cbd5e1;
-            padding: 0.45rem 1.2rem;
+            padding: 0.4rem 1rem;
             border-radius: 50px;
             font-weight: 500;
             transition: all 0.3s ease;
             cursor: pointer;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
         }
 
         .filter-btn:hover,
@@ -655,15 +676,14 @@
         }
 
         .portfolio-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-5px);
             box-shadow: var(--shadow-lg);
         }
 
         .portfolio-image { 
-            height: 200px; 
+            height: 180px; 
             overflow: hidden;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
         }
 
         .portfolio-image img {
@@ -675,20 +695,20 @@
 
         .portfolio-card:hover .portfolio-image img { transform: scale(1.08); }
 
-        .portfolio-content { padding: 1.4rem; }
+        .portfolio-content { padding: 1.2rem; }
 
-        .portfolio-content h4 { color: var(--primary-blue); margin-bottom: 0.4rem; font-size: 1rem; }
+        .portfolio-content h4 { color: var(--primary-blue); margin-bottom: 0.3rem; font-size: 0.95rem; }
 
-        .portfolio-content p { color: var(--text-gray); font-size: 0.875rem; margin-bottom: 0.9rem; }
+        .portfolio-content p { color: var(--text-gray); font-size: 0.8rem; margin-bottom: 0.7rem; }
 
-        .portfolio-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .portfolio-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
 
         .portfolio-tag {
             background: rgba(37,99,235,0.1);
             color: var(--secondary-blue);
-            padding: 0.2rem 0.65rem;
+            padding: 0.15rem 0.6rem;
             border-radius: 50px;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             font-weight: 500;
         }
 
@@ -696,18 +716,18 @@
         .contact-form {
             background: var(--white);
             border-radius: var(--radius-lg);
-            padding: 2.5rem;
+            padding: 1.5rem;
             box-shadow: var(--shadow-lg);
             border: 1px solid #e2e8f0;
         }
 
-        .form-label { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.4rem; display: block; }
+        .form-label { font-weight: 600; font-size: 0.85rem; margin-bottom: 0.3rem; display: block; }
 
         .form-control {
             border: 1.5px solid #cbd5e1;
             border-radius: var(--radius-sm);
-            padding: 0.8rem 1rem;
-            font-size: 0.95rem;
+            padding: 0.7rem 0.9rem;
+            font-size: 0.9rem;
             transition: all 0.25s ease;
             width: 100%;
             display: block;
@@ -722,7 +742,7 @@
         .contact-info-box {
             background: var(--bg-light);
             border-radius: var(--radius-lg);
-            padding: 2.5rem;
+            padding: 1.5rem;
             height: 100%;
             border: 1px solid #e2e8f0;
         }
@@ -730,35 +750,35 @@
         .info-item {
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
-            margin-bottom: 1.75rem;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
         }
 
         .info-item:last-child { margin-bottom: 0; }
 
         .info-icon {
-            width: 46px;
-            height: 46px;
+            width: 40px;
+            height: 40px;
             background: linear-gradient(135deg, var(--secondary-blue), var(--light-blue));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--white);
-            font-size: 1.1rem;
+            font-size: 1rem;
             flex-shrink: 0;
         }
 
-        .info-content h4 { color: var(--primary-blue); margin-bottom: 0.2rem; font-size: 1rem; }
+        .info-content h4 { color: var(--primary-blue); margin-bottom: 0.1rem; font-size: 0.9rem; }
 
-        .info-content p { color: var(--text-gray); margin-bottom: 0; font-size: 0.9rem; }
+        .info-content p { color: var(--text-gray); margin-bottom: 0; font-size: 0.8rem; }
 
         #formStatus {
             display: none;
-            padding: 0.85rem 1rem;
+            padding: 0.7rem 0.9rem;
             border-radius: var(--radius-sm);
-            font-size: 0.9rem;
-            margin-top: 1rem;
+            font-size: 0.85rem;
+            margin-top: 0.8rem;
         }
 
         #formStatus.success {
@@ -777,22 +797,22 @@
         .footer {
             background: var(--primary-blue);
             color: var(--white);
-            padding: 3.5rem 0 2rem;
+            padding: 2.5rem 0 1.5rem;
         }
 
-        .footer-brand h3 { color: var(--white); font-size: 1.2rem; margin-bottom: 0.35rem; }
+        .footer-brand h3 { color: var(--white); font-size: 1rem; margin-bottom: 0.25rem; }
 
-        .footer-brand p { color: rgba(255,255,255,0.7); margin-bottom: 0; font-size: 0.875rem; }
+        .footer-brand p { color: rgba(255,255,255,0.7); margin-bottom: 0; font-size: 0.75rem; }
 
-        .footer-social { display: flex; gap: 0.75rem; align-items: center; }
+        .footer-social { display: flex; gap: 0.6rem; align-items: center; }
 
         .footer-social a {
             color: rgba(255,255,255,0.8);
-            font-size: 1.15rem;
+            font-size: 1rem;
             transition: all 0.3s ease;
             text-decoration: none;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -809,26 +829,26 @@
 
         .footer-bottom {
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 1.5rem;
             border-top: 1px solid rgba(255,255,255,0.1);
             color: rgba(255,255,255,0.5);
-            font-size: 0.875rem;
+            font-size: 0.7rem;
         }
 
         /* ===== BACK TO TOP ===== */
         .back-to-top {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 46px;
-            height: 46px;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
             background: var(--secondary-blue);
             color: var(--white);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
             opacity: 0;
             visibility: hidden;
@@ -843,18 +863,17 @@
         .back-to-top:hover {
             background: var(--primary-blue);
             transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
         }
 
         .loading-spinner {
             display: inline-block;
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             border: 2px solid rgba(255,255,255,0.3);
             border-radius: 50%;
             border-top-color: white;
             animation: spin 0.6s linear infinite;
-            margin-right: 8px;
+            margin-right: 6px;
         }
 
         @keyframes spin {
@@ -863,24 +882,25 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .section { padding: 4rem 0; }
-            .hero-image-container { max-width: 250px; margin: 2rem auto 0; }
-            .contact-form, .contact-info-box { padding: 1.75rem; }
+            .section { padding: 3rem 0; }
+            .hero-image-container { max-width: 220px; }
+            .contact-form, .contact-info-box { padding: 1.2rem; }
             .timeline::before { left: 15px; }
-            .timeline-item { padding-left: 50px; }
+            .timeline-item { padding-left: 45px; }
             .timeline-dot { left: 8px; }
         }
 
         @media (max-width: 576px) {
-            body { padding-top: 64px; }
-            .section { padding: 3rem 0; }
+            body { padding-top: 60px; }
+            .section { padding: 2.5rem 0; }
             .btn-primary-custom,
             .btn-outline-custom {
-                padding: 0.75rem 1.4rem;
-                font-size: 0.875rem;
+                padding: 0.6rem 1.2rem;
+                font-size: 0.8rem;
             }
-            .filter-btn { padding: 0.35rem 0.9rem; font-size: 0.8rem; }
-            .back-to-top { width: 40px; height: 40px; bottom: 1.25rem; right: 1.25rem; }
+            .filter-btn { padding: 0.3rem 0.8rem; font-size: 0.75rem; }
+            .back-to-top { width: 38px; height: 38px; bottom: 1rem; right: 1rem; }
+            .navbar-brand { font-size: 0.85rem; }
         }
 
         .portfolio-item {
@@ -889,18 +909,35 @@
 
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         .divider {
-            width: 60px;
-            height: 4px;
+            width: 50px;
+            height: 3px;
             background: linear-gradient(135deg, var(--secondary-blue), var(--light-blue));
             border-radius: 2px;
-            margin: 0.75rem auto 0;
+            margin: 0.6rem auto 0;
         }
 
-        .section { padding: 5rem 0; }
+        .section { padding: 4rem 0; }
+
+        /* Container padding untuk mobile */
+        .container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        /* Prevent horizontal scroll */
+        .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        [class*="col-"] {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
     </style>
 </head>
 <body>
@@ -922,13 +959,13 @@
 
     <!-- NAVBAR -->
     <nav class="navbar" id="mainNav">
-        <div class="container d-flex align-items-center justify-content-between">
+        <div class="container">
             <a class="navbar-brand" href="#hero">
-                <span>Muhammad Akmal Abdillah</span>
+                Muhammad Akmal Abdillah
             </a>
 
             <!-- Desktop nav links -->
-            <ul class="navbar-nav d-none d-lg-flex flex-row ms-auto mb-0">
+            <ul class="navbar-nav d-none d-lg-flex flex-row mb-0">
                 <li class="nav-item"><a class="nav-link active" href="#hero">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
@@ -948,17 +985,17 @@
         </div>
     </nav>
 
-    <!-- HERO -->
+    <!-- HERO SECTION -->
     <section id="hero" class="section">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6" data-aos="fade-right">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-6 order-lg-1" data-aos="fade-right">
                     <div class="hero-content">
                         <span class="hero-badge">
                             <i class="fas fa-rocket"></i>
                             Junior Web Developer
                         </span>
-                        <h1 class="hero-title mb-4">
+                        <h1 class="hero-title mb-3">
                             Hi, I'm <span class="text-gradient">Muhammad Akmal Abdillah</span>
                         </h1>
                         <p class="lead mb-4">
@@ -966,11 +1003,9 @@
                             Passionate about creating functional and user-friendly web applications.
                         </p>
                         <div class="d-flex flex-wrap align-items-center gap-3">
-                            <!-- Download CV - Menggunakan Google Drive Link -->
                             <a 
                                 href="https://drive.google.com/uc?export=download&id=1tC_9o-85vHUv7YR-aAYwtRV5aVXLTCMn" 
                                 class="btn-primary-custom" 
-                                id="downloadCVBtn"
                                 download="CV_Muhammad_Akmal_Abdillah.pdf"
                                 target="_blank"
                             >
@@ -993,14 +1028,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
+                <div class="col-lg-6 order-lg-2" data-aos="fade-left" data-aos-delay="100">
                     <div class="hero-image-container">
                         <div class="hero-shape"></div>
                         <img 
                             src="images/muhammad_akmal.png" 
                             alt="Muhammad Akmal Abdillah" 
                             class="hero-image" 
-                            id="profileImg" 
                             onerror="this.src='https://ui-avatars.com/api/?background=2563eb&color=fff&name=Akmal&length=4&size=300&font-size=0.33'"
                         >
                     </div>
@@ -1009,15 +1043,15 @@
         </div>
     </section>
 
-    <!-- ABOUT -->
+    <!-- ABOUT SECTION -->
     <section id="about" class="section">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2 class="section-heading">About Me</h2>
                 <div class="divider"></div>
-                <p class="mt-3">SMK ADI SANGGORO Graduate with hands-on web development experience</p>
+                <p class="mt-2">SMK ADI SANGGORO Graduate with hands-on web development experience</p>
             </div>
-            <div class="row align-items-center g-5">
+            <div class="row align-items-center g-4">
                 <div class="col-lg-5 col-md-6" data-aos="fade-right">
                     <div class="about-image">
                         <img 
@@ -1057,21 +1091,21 @@
         </div>
     </section>
 
-    <!-- SKILLS -->
+    <!-- SKILLS SECTION -->
     <section id="skills" class="section" style="background: var(--bg-light);">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2 class="section-heading">Technical Skills</h2>
                 <div class="divider"></div>
-                <p class="mt-3">Technologies and tools I work with</p>
+                <p class="mt-2">Technologies and tools I work with</p>
             </div>
-            <div class="row g-4">
+            <div class="row g-3">
                 <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="skill-card">
                         <div class="skill-icon"><i class="fab fa-php"></i></div>
                         <div class="skill-info">
                             <h4>PHP &amp; Laravel</h4>
-                            <p>PHP Native, Laravel Framework, MVC Architecture</p>
+                            <p>PHP Native, Laravel, MVC</p>
                             <div class="skill-bar"><div class="skill-progress" data-width="85"></div></div>
                             <span class="skill-percentage">85%</span>
                         </div>
@@ -1082,7 +1116,7 @@
                         <div class="skill-icon"><i class="fab fa-html5"></i></div>
                         <div class="skill-info">
                             <h4>Frontend</h4>
-                            <p>HTML5, CSS3, JavaScript, Bootstrap, Tailwind</p>
+                            <p>HTML5, CSS3, JS, Bootstrap</p>
                             <div class="skill-bar"><div class="skill-progress" data-width="90"></div></div>
                             <span class="skill-percentage">90%</span>
                         </div>
@@ -1093,7 +1127,7 @@
                         <div class="skill-icon"><i class="fas fa-database"></i></div>
                         <div class="skill-info">
                             <h4>Database</h4>
-                            <p>MySQL, Database Design, Query Optimization</p>
+                            <p>MySQL, Design, Queries</p>
                             <div class="skill-bar"><div class="skill-progress" data-width="80"></div></div>
                             <span class="skill-percentage">80%</span>
                         </div>
@@ -1104,7 +1138,7 @@
                         <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
                         <div class="skill-info">
                             <h4>Tools</h4>
-                            <p>Git, GitHub, VS Code, XAMPP, Figma</p>
+                            <p>Git, VS Code, XAMPP</p>
                             <div class="skill-bar"><div class="skill-progress" data-width="75"></div></div>
                             <span class="skill-percentage">75%</span>
                         </div>
@@ -1114,13 +1148,13 @@
         </div>
     </section>
 
-    <!-- EXPERIENCE -->
-    <section id="experience" class="section" style="background: var(--white);">
+    <!-- EXPERIENCE SECTION -->
+    <section id="experience" class="section">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2 class="section-heading">Experience &amp; Education</h2>
                 <div class="divider"></div>
-                <p class="mt-3">My learning journey and professional experience</p>
+                <p class="mt-2">My learning journey and professional experience</p>
             </div>
             <div class="timeline">
                 <div class="timeline-item" data-aos="fade-up">
@@ -1129,12 +1163,7 @@
                     <div class="timeline-content">
                         <h4>Internship (PKL)</h4>
                         <h5>PT KUSUMA DINATAHA JAYA ABADI</h5>
-                        <p>Completed 4-month professional internship program, assisting in web development projects and learning industry best practices in software development.</p>
-                        <div class="portfolio-tags">
-                            <span class="portfolio-tag">Web Development</span>
-                            <span class="portfolio-tag">Team Collaboration</span>
-                            <span class="portfolio-tag">Problem Solving</span>
-                        </div>
+                        <p>Completed 4-month professional internship program, assisting in web development projects and learning industry best practices.</p>
                     </div>
                 </div>
                 <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
@@ -1143,33 +1172,28 @@
                     <div class="timeline-content">
                         <h4>SMK ADI SANGGORO - Software Engineering</h4>
                         <h5>Rekayasa Perangkat Lunak (RPL)</h5>
-                        <p>Graduated from SMK ADI SANGGORO specializing in Software Engineering. Completed various projects including web applications and database systems.</p>
-                        <div class="portfolio-tags">
-                            <span class="portfolio-tag">PHP</span>
-                            <span class="portfolio-tag">MySQL</span>
-                            <span class="portfolio-tag">Web Design</span>
-                        </div>
+                        <p>Graduated specializing in Software Engineering. Completed various projects including web applications and database systems.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PORTFOLIO -->
-    <section id="portfolio" class="section">
+    <!-- PORTFOLIO SECTION -->
+    <section id="portfolio" class="section" style="background: var(--bg-light);">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2 class="section-heading">My Portfolio</h2>
                 <div class="divider"></div>
-                <p class="mt-3">Projects that showcase my skills and experience</p>
+                <p class="mt-2">Projects that showcase my skills and experience</p>
             </div>
-            <div class="portfolio-filter mb-5" data-aos="fade-up">
+            <div class="portfolio-filter" data-aos="fade-up">
                 <button class="filter-btn active" data-filter="all">All Projects</button>
                 <button class="filter-btn" data-filter="web">Web Development</button>
                 <button class="filter-btn" data-filter="pos">POS Systems</button>
                 <button class="filter-btn" data-filter="academic">Academic</button>
             </div>
-            <div class="row g-4" id="portfolioContainer">
+            <div class="row g-3" id="portfolioContainer">
                 <div class="col-lg-4 col-md-6 portfolio-item" data-category="pos web" data-aos="fade-up" data-aos-delay="100">
                     <div class="portfolio-card">
                         <div class="portfolio-image">
@@ -1177,7 +1201,7 @@
                         </div>
                         <div class="portfolio-content">
                             <h4>POS Kasir Warung Sembako</h4>
-                            <p>Complete Point of Sale system for grocery store with inventory management, sales tracking, and reporting.</p>
+                            <p>Complete Point of Sale system for grocery store with inventory management.</p>
                             <div class="portfolio-tags">
                                 <span class="portfolio-tag">Laravel</span>
                                 <span class="portfolio-tag">MySQL</span>
@@ -1189,27 +1213,27 @@
                 <div class="col-lg-4 col-md-6 portfolio-item" data-category="web" data-aos="fade-up" data-aos-delay="200">
                     <div class="portfolio-card">
                         <div class="portfolio-image">
-                            <img src="images/saintuary.png" alt="Sports Field Booking Website" loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1526726538690-5cbf956ae2fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sports Booking Website" loading="lazy">
                         </div>
                         <div class="portfolio-content">
-                            <h4>Sports Field Booking Website</h4>
-                            <p>Website for booking sports facilities with scheduling, payment integration, and user management.</p>
+                            <h4>Sports Field Booking</h4>
+                            <p>Website for booking sports facilities with scheduling and user management.</p>
                             <div class="portfolio-tags">
                                 <span class="portfolio-tag">Laravel</span>
                                 <span class="portfolio-tag">JavaScript</span>
-                                <span class="portfolio-tag">Tailwind CSS</span>
+                                <span class="portfolio-tag">Tailwind</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 portfolio-item" data-category="academic web" data-aos="fade-up" data-aos-delay="400">
+                <div class="col-lg-4 col-md-6 portfolio-item" data-category="academic web" data-aos="fade-up" data-aos-delay="300">
                     <div class="portfolio-card">
                         <div class="portfolio-image">
                             <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Attendance System" loading="lazy">
                         </div>
                         <div class="portfolio-content">
                             <h4>Website Absensi Academy</h4>
-                            <p>Attendance management system for educational institutions with reporting and analytics.</p>
+                            <p>Attendance management system with reporting and analytics.</p>
                             <div class="portfolio-tags">
                                 <span class="portfolio-tag">Laravel</span>
                                 <span class="portfolio-tag">MySQL</span>
@@ -1222,20 +1246,20 @@
         </div>
     </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="section" style="background: var(--bg-light);">
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2 class="section-heading">Get In Touch</h2>
                 <div class="divider"></div>
-                <p class="mt-3">Let's discuss your project or opportunity</p>
+                <p class="mt-2">Let's discuss your project or opportunity</p>
             </div>
-            <div class="row g-5">
+            <div class="row g-4">
                 <div class="col-lg-7" data-aos="fade-right">
                     <div class="contact-form">
                         <form id="contactForm">
-                            <div class="row mb-3">
-                                <div class="col-md-6 mb-3 mb-md-0">
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
                                     <label for="name" class="form-label">Full Name</label>
                                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
                                 </div>
@@ -1248,9 +1272,9 @@
                                 <label for="subject" class="form-label">Subject</label>
                                 <input type="text" class="form-control" id="subject" name="subject" placeholder="Project inquiry" required>
                             </div>
-                            <div class="mb-4">
+                            <div class="mb-3">
                                 <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+                                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Tell me about your project..." required></textarea>
                             </div>
                             
                             <button type="submit" class="btn-primary-custom w-100" id="submitBtn">
@@ -1288,7 +1312,7 @@
                             <div class="info-icon"><i class="fas fa-clock"></i></div>
                             <div class="info-content">
                                 <h4>Availability</h4>
-                                <p>Open for freelance projects and job opportunities</p>
+                                <p>Open for freelance &amp; job opportunities</p>
                             </div>
                         </div>
                     </div>
@@ -1300,10 +1324,10 @@
     <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
-            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 mb-4">
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 mb-3">
                 <div class="footer-brand text-center text-sm-start">
                     <h3>Muhammad Akmal Abdillah</h3>
-                    <p>Junior Web Developer &amp; SMK ADI SANGGORO Graduate</p>
+                    <p>Junior Web Developer | SMK ADI SANGGORO Graduate</p>
                 </div>
                 <div class="footer-social">
                     <a href="https://github.com/akmal4566" target="_blank" rel="noopener noreferrer" title="GitHub">
@@ -1329,12 +1353,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // ===== AOS INIT =====
             AOS.init({
-                duration: 750,
+                duration: 600,
                 easing: 'ease-out',
                 once: true,
-                offset: 80
+                offset: 60
             });
 
             // ===== HAMBURGER MENU MOBILE =====
@@ -1373,12 +1396,10 @@
                 });
             }
 
-            // Tutup menu saat klik overlay
             if (menuOverlay) {
                 menuOverlay.addEventListener('click', closeMenu);
             }
 
-            // Tutup menu saat klik link mobile
             const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
             mobileNavLinks.forEach(function (link) {
                 link.addEventListener('click', function () {
@@ -1386,7 +1407,6 @@
                 });
             });
 
-            // Tutup menu saat tekan Escape
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') closeMenu();
             });
@@ -1397,56 +1417,59 @@
                 if (navbar) {
                     navbar.classList.toggle('scrolled', window.scrollY > 50);
                 }
-            }, { passive: true });
+            });
 
             // SMOOTH SCROLL
             document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
                 anchor.addEventListener('click', function (e) {
-                    var targetId = this.getAttribute('href');
+                    const targetId = this.getAttribute('href');
                     if (!targetId || targetId === '#') return;
-                    var targetEl = document.querySelector(targetId);
+                    const targetEl = document.querySelector(targetId);
                     if (!targetEl) return;
                     e.preventDefault();
-                    var navHeight = navbar ? navbar.offsetHeight : 70;
-                    var targetTop = targetEl.getBoundingClientRect().top + window.scrollY - navHeight - 10;
+                    const navHeight = navbar ? navbar.offsetHeight : 70;
+                    const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - navHeight - 10;
                     window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+                    if (mobileMenu.classList.contains('show')) closeMenu();
                 });
             });
 
             // ACTIVE NAV HIGHLIGHT
-            var sections = document.querySelectorAll('section[id]');
-            var desktopNavLinks = document.querySelectorAll('.navbar-nav .nav-link');
-            var mobileLinks = document.querySelectorAll('.mobile-nav-link');
+            const sections = document.querySelectorAll('section[id]');
+            const desktopNavLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
             function setActiveNav() {
-                var current = '';
-                var scrollPos = window.scrollY + 150;
+                let current = '';
+                const scrollPos = window.scrollY + 120;
                 sections.forEach(function (sec) {
-                    var secTop = sec.offsetTop;
-                    var secBottom = secTop + sec.offsetHeight;
+                    const secTop = sec.offsetTop;
+                    const secBottom = secTop + sec.offsetHeight;
                     if (scrollPos >= secTop && scrollPos < secBottom) {
                         current = sec.getAttribute('id');
                     }
                 });
 
                 desktopNavLinks.forEach(function (link) {
-                    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+                    const href = link.getAttribute('href');
+                    link.classList.toggle('active', href === '#' + current);
                 });
 
                 mobileLinks.forEach(function (link) {
-                    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+                    const href = link.getAttribute('href');
+                    link.classList.toggle('active', href === '#' + current);
                 });
             }
 
-            window.addEventListener('scroll', setActiveNav, { passive: true });
+            window.addEventListener('scroll', setActiveNav);
             setActiveNav();
 
             // BACK TO TOP
-            var backToTopBtn = document.getElementById('backToTop');
+            const backToTopBtn = document.getElementById('backToTop');
             if (backToTopBtn) {
                 window.addEventListener('scroll', function () {
                     backToTopBtn.classList.toggle('show', window.scrollY > 500);
-                }, { passive: true });
+                });
 
                 backToTopBtn.addEventListener('click', function () {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1454,34 +1477,34 @@
             }
 
             // PORTFOLIO FILTER
-            var filterBtns = document.querySelectorAll('.filter-btn');
-            var portfolioItems = document.querySelectorAll('.portfolio-item');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
 
             filterBtns.forEach(function (btn) {
                 btn.addEventListener('click', function () {
                     filterBtns.forEach(function (b) { b.classList.remove('active'); });
                     this.classList.add('active');
 
-                    var filter = this.getAttribute('data-filter');
+                    const filter = this.getAttribute('data-filter');
                     portfolioItems.forEach(function (item) {
-                        var cats = item.getAttribute('data-category').toLowerCase().split(' ');
+                        const cats = item.getAttribute('data-category').toLowerCase().split(' ');
                         item.style.display = (filter === 'all' || cats.includes(filter)) ? '' : 'none';
                     });
                 });
             });
 
             // SKILL BAR ANIMATION
-            var skillBars = document.querySelectorAll('.skill-progress');
+            const skillBars = document.querySelectorAll('.skill-progress');
 
             function animateSkills() {
                 skillBars.forEach(function (bar) {
                     if (bar.classList.contains('animated')) return;
-                    var card = bar.closest('.skill-card');
+                    const card = bar.closest('.skill-card');
                     if (!card) return;
-                    var rect = card.getBoundingClientRect();
+                    const rect = card.getBoundingClientRect();
                     if (rect.top < window.innerHeight - 50 && rect.bottom > 0) {
                         setTimeout(function () {
-                            var width = bar.getAttribute('data-width');
+                            const width = bar.getAttribute('data-width');
                             if (width) {
                                 bar.style.width = width + '%';
                                 bar.classList.add('animated');
@@ -1492,12 +1515,12 @@
             }
 
             setTimeout(animateSkills, 300);
-            window.addEventListener('scroll', animateSkills, { passive: true });
+            window.addEventListener('scroll', animateSkills);
 
             // CONTACT FORM
-            var contactForm = document.getElementById('contactForm');
-            var submitBtn = document.getElementById('submitBtn');
-            var formStatus = document.getElementById('formStatus');
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const formStatus = document.getElementById('formStatus');
 
             function showStatus(msg, type) {
                 if (!formStatus) return;
@@ -1519,10 +1542,10 @@
                 contactForm.addEventListener('submit', function (e) {
                     e.preventDefault();
 
-                    var name = document.getElementById('name').value.trim();
-                    var email = document.getElementById('email').value.trim();
-                    var subject = document.getElementById('subject').value.trim();
-                    var message = document.getElementById('message').value.trim();
+                    const name = document.getElementById('name').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const subject = document.getElementById('subject').value.trim();
+                    const message = document.getElementById('message').value.trim();
 
                     if (!name || !email || !subject || !message) {
                         showStatus('Harap isi semua kolom sebelum mengirim pesan.', 'error');
@@ -1534,16 +1557,16 @@
                         return;
                     }
 
-                    var originalHTML = submitBtn.innerHTML;
+                    const originalHTML = submitBtn.innerHTML;
                     submitBtn.innerHTML = '<span class="loading-spinner"></span>Sending...';
                     submitBtn.disabled = true;
 
-                    var fullMessage = 'Name: ' + name + '\nEmail: ' + email + '\n\nSubject: ' + subject + '\n\nMessage:\n' + message;
-                    var mailtoLink = 'mailto:akmalabdillah987@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(fullMessage);
+                    const fullMessage = 'Name: ' + name + '\nEmail: ' + email + '\n\nSubject: ' + subject + '\n\nMessage:\n' + message;
+                    const mailtoLink = 'mailto:akmalabdillah987@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(fullMessage);
                     window.location.href = mailtoLink;
 
                     setTimeout(function () {
-                        showStatus('Terima kasih ' + name + '! Email client akan terbuka. Kirim pesan ke akmalabdillah987@gmail.com', 'success');
+                        showStatus('Terima kasih ' + name + '! Email client akan terbuka.', 'success');
                         contactForm.reset();
                         submitBtn.innerHTML = originalHTML;
                         submitBtn.disabled = false;
