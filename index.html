@@ -105,7 +105,7 @@
         .navbar-brand {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: clamp(1rem, 2.5vw, 1.35rem);
+            font-size: clamp(0.9rem, 2.5vw, 1.35rem);
             color: var(--primary-blue) !important;
             display: flex;
             align-items: center;
@@ -113,8 +113,8 @@
             text-decoration: none;
         }
 
-        /* ===== NAV LINKS (Desktop) ===== */
-        .nav-link {
+        /* Desktop nav links */
+        .navbar-nav .nav-link {
             font-weight: 500;
             color: var(--text-dark) !important;
             padding: 0.5rem 1rem !important;
@@ -122,13 +122,13 @@
             transition: color 0.25s ease;
         }
 
-        .nav-link:hover,
-        .nav-link.active {
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
             color: var(--secondary-blue) !important;
         }
 
         @media (min-width: 992px) {
-            .nav-link::after {
+            .navbar-nav .nav-link::after {
                 content: '';
                 position: absolute;
                 bottom: 0;
@@ -140,19 +140,17 @@
                 transition: transform 0.3s ease;
                 border-radius: 2px;
             }
-
-            .nav-link:hover::after,
-            .nav-link.active::after {
+            .navbar-nav .nav-link:hover::after,
+            .navbar-nav .nav-link.active::after {
                 transform: scaleX(1);
             }
         }
 
-        /* ===== HAMBURGER BUTTON - HANYA MUNCUL DI MOBILE ===== */
+        /* ===== HAMBURGER BUTTON - CUSTOM ===== */
         .navbar-toggler {
-            display: none !important; /* sembunyikan default bootstrap toggler */
+            display: none !important;
         }
 
-        /* Tombol hamburger custom kita */
         #hamburgerBtn {
             display: none;
             align-items: center;
@@ -286,12 +284,12 @@
             font-size: 0.9rem;
         }
 
-        /* ===== BODY LOCK saat menu terbuka ===== */
+        /* ===== BODY LOCK ===== */
         body.menu-open {
             overflow: hidden;
         }
 
-        /* ===== DESKTOP: navbar-collapse biasa ===== */
+        /* Desktop: sembunyikan mobile menu */
         @media (min-width: 992px) {
             body { padding-top: 80px; }
             #mobileMenu { display: none !important; }
@@ -300,8 +298,7 @@
 
         @media (max-width: 991.98px) {
             body { padding-top: 70px; }
-            
-            /* Sembunyikan navbar-collapse bootstrap di mobile (kita pakai sidebar custom) */
+            /* Sembunyikan navbar-collapse bootstrap di mobile */
             .navbar-collapse {
                 display: none !important;
             }
@@ -344,7 +341,6 @@
             margin-bottom: 1.5rem;
         }
 
-        /* ===== FIX 1: HERO IMAGE - object-position top supaya muka & rambut terlihat ===== */
         .hero-image-container {
             position: relative;
             max-width: 340px;
@@ -361,7 +357,7 @@
             border: 8px solid var(--white);
             aspect-ratio: 1/1;
             object-fit: cover;
-            object-position: 50% 15%; /* FIX: naik ke atas supaya muka & rambut kelihatan */
+            object-position: 50% 15%;
         }
 
         .hero-shape {
@@ -456,7 +452,6 @@
         /* ===== ABOUT ===== */
         #about { background: var(--bg-light); }
 
-        /* FIX 1: ABOUT IMAGE juga disamakan object-position */
         .about-image {
             position: relative;
             max-width: 370px;
@@ -471,7 +466,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: 50% 15%; /* FIX: naik ke atas supaya muka & rambut kelihatan */
+            object-position: 50% 15%;
             transition: transform 0.5s ease;
             display: block;
         }
@@ -879,13 +874,11 @@
         @media (max-width: 576px) {
             body { padding-top: 64px; }
             .section { padding: 3rem 0; }
-
             .btn-primary-custom,
             .btn-outline-custom {
                 padding: 0.75rem 1.4rem;
                 font-size: 0.875rem;
             }
-
             .filter-btn { padding: 0.35rem 0.9rem; font-size: 0.8rem; }
             .back-to-top { width: 40px; height: 40px; bottom: 1.25rem; right: 1.25rem; }
         }
@@ -894,7 +887,6 @@
             transition: all 0.4s ease;
         }
 
-        /* ===== SECTION TITLE ===== */
         .section-title {
             text-align: center;
             margin-bottom: 3rem;
@@ -913,10 +905,10 @@
 </head>
 <body>
 
-    <!-- ===== OVERLAY untuk menutup menu mobile ===== -->
+    <!-- OVERLAY untuk menutup menu mobile -->
     <div class="menu-overlay" id="menuOverlay"></div>
 
-    <!-- ===== MOBILE SIDEBAR MENU ===== -->
+    <!-- MOBILE SIDEBAR MENU -->
     <nav id="mobileMenu" aria-label="Mobile Navigation">
         <ul class="mobile-nav-list">
             <li><a href="#hero" class="mobile-nav-link active"><i class="fas fa-home"></i> Home</a></li>
@@ -928,7 +920,7 @@
         </ul>
     </nav>
 
-    <!-- ===== NAVBAR ===== -->
+    <!-- NAVBAR -->
     <nav class="navbar" id="mainNav">
         <div class="container d-flex align-items-center justify-content-between">
             <a class="navbar-brand" href="#hero">
@@ -945,7 +937,7 @@
                 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
             </ul>
 
-            <!-- Hamburger button - hanya muncul di mobile (<992px) -->
+            <!-- Hamburger button custom -->
             <button id="hamburgerBtn" aria-label="Buka menu navigasi" aria-expanded="false">
                 <span class="hamburger-icon">
                     <span></span>
@@ -956,7 +948,7 @@
         </div>
     </nav>
 
-    <!-- ===== HERO ===== -->
+    <!-- HERO -->
     <section id="hero" class="section">
         <div class="container">
             <div class="row align-items-center">
@@ -974,19 +966,13 @@
                             Passionate about creating functional and user-friendly web applications.
                         </p>
                         <div class="d-flex flex-wrap align-items-center gap-3">
-                            <!-- 
-                                FIX 2: Download CV
-                                - Nama file diubah ke cv_akmal_baru.pdf
-                                - Pakai <a> tag biasa (bukan button) supaya download bekerja di semua perangkat
-                                - Tambah atribut download dan href yang benar
-                                - type="application/pdf" membantu browser/mobile mengenali file
-                            -->
+                            <!-- Download CV - Menggunakan Google Drive Link -->
                             <a 
-                                href="cv_akmal_baru.pdf" 
+                                href="https://drive.google.com/uc?export=download&id=1tC_9o-85vHUv7YR-aAYwtRV5aVXLTCMn" 
                                 class="btn-primary-custom" 
                                 id="downloadCVBtn"
                                 download="CV_Muhammad_Akmal_Abdillah.pdf"
-                                type="application/pdf"
+                                target="_blank"
                             >
                                 <i class="fas fa-download"></i>
                                 Download CV
@@ -1023,7 +1009,7 @@
         </div>
     </section>
 
-    <!-- ===== ABOUT ===== -->
+    <!-- ABOUT -->
     <section id="about" class="section">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
@@ -1071,7 +1057,7 @@
         </div>
     </section>
 
-    <!-- ===== SKILLS ===== -->
+    <!-- SKILLS -->
     <section id="skills" class="section" style="background: var(--bg-light);">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
@@ -1128,7 +1114,7 @@
         </div>
     </section>
 
-    <!-- ===== EXPERIENCE ===== -->
+    <!-- EXPERIENCE -->
     <section id="experience" class="section" style="background: var(--white);">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
@@ -1169,7 +1155,7 @@
         </div>
     </section>
 
-    <!-- ===== PORTFOLIO ===== -->
+    <!-- PORTFOLIO -->
     <section id="portfolio" class="section">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
@@ -1193,7 +1179,7 @@
                             <h4>POS Kasir Warung Sembako</h4>
                             <p>Complete Point of Sale system for grocery store with inventory management, sales tracking, and reporting.</p>
                             <div class="portfolio-tags">
-                                <span class="portfolio-tag">PHP Native</span>
+                                <span class="portfolio-tag">Laravel</span>
                                 <span class="portfolio-tag">MySQL</span>
                                 <span class="portfolio-tag">Bootstrap</span>
                             </div>
@@ -1203,7 +1189,7 @@
                 <div class="col-lg-4 col-md-6 portfolio-item" data-category="web" data-aos="fade-up" data-aos-delay="200">
                     <div class="portfolio-card">
                         <div class="portfolio-image">
-                            <img src="https://images.unsplash.com/photo-1526726538690-5cbf956ae2fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sports Booking Website" loading="lazy">
+                            <img src="images/saintuary.png" alt="Sports Field Booking Website" loading="lazy">
                         </div>
                         <div class="portfolio-content">
                             <h4>Sports Field Booking Website</h4>
@@ -1212,22 +1198,6 @@
                                 <span class="portfolio-tag">Laravel</span>
                                 <span class="portfolio-tag">JavaScript</span>
                                 <span class="portfolio-tag">Tailwind CSS</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 portfolio-item" data-category="pos" data-aos="fade-up" data-aos-delay="300">
-                    <div class="portfolio-card">
-                        <div class="portfolio-image">
-                            <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Multi-container POS" loading="lazy">
-                        </div>
-                        <div class="portfolio-content">
-                            <h4>Multi-container POS System</h4>
-                            <p>Advanced POS system with multiple container management for inventory and sales operations.</p>
-                            <div class="portfolio-tags">
-                                <span class="portfolio-tag">PHP</span>
-                                <span class="portfolio-tag">JavaScript</span>
-                                <span class="portfolio-tag">AJAX</span>
                             </div>
                         </div>
                     </div>
@@ -1252,7 +1222,7 @@
         </div>
     </section>
 
-    <!-- ===== CONTACT ===== -->
+    <!-- CONTACT -->
     <section id="contact" class="section" style="background: var(--bg-light);">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
@@ -1327,7 +1297,7 @@
         </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 mb-4">
@@ -1354,7 +1324,6 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- Bootstrap JS (tetap di-load untuk komponen lain) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
@@ -1368,7 +1337,7 @@
                 offset: 80
             });
 
-            // ===== FIX 3: HAMBURGER MENU MOBILE =====
+            // ===== HAMBURGER MENU MOBILE =====
             const hamburgerBtn = document.getElementById('hamburgerBtn');
             const mobileMenu = document.getElementById('mobileMenu');
             const menuOverlay = document.getElementById('menuOverlay');
@@ -1409,7 +1378,7 @@
                 menuOverlay.addEventListener('click', closeMenu);
             }
 
-            // Tutup menu saat klik salah satu link di mobile menu
+            // Tutup menu saat klik link mobile
             const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
             mobileNavLinks.forEach(function (link) {
                 link.addEventListener('click', function () {
@@ -1422,7 +1391,7 @@
                 if (e.key === 'Escape') closeMenu();
             });
 
-            // ===== NAVBAR SCROLL =====
+            // NAVBAR SCROLL
             const navbar = document.getElementById('mainNav');
             window.addEventListener('scroll', function () {
                 if (navbar) {
@@ -1430,7 +1399,7 @@
                 }
             }, { passive: true });
 
-            // ===== SMOOTH SCROLL (untuk semua link #...) =====
+            // SMOOTH SCROLL
             document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
                 anchor.addEventListener('click', function (e) {
                     var targetId = this.getAttribute('href');
@@ -1444,7 +1413,7 @@
                 });
             });
 
-            // ===== ACTIVE NAV HIGHLIGHT =====
+            // ACTIVE NAV HIGHLIGHT
             var sections = document.querySelectorAll('section[id]');
             var desktopNavLinks = document.querySelectorAll('.navbar-nav .nav-link');
             var mobileLinks = document.querySelectorAll('.mobile-nav-link');
@@ -1472,7 +1441,7 @@
             window.addEventListener('scroll', setActiveNav, { passive: true });
             setActiveNav();
 
-            // ===== BACK TO TOP =====
+            // BACK TO TOP
             var backToTopBtn = document.getElementById('backToTop');
             if (backToTopBtn) {
                 window.addEventListener('scroll', function () {
@@ -1484,7 +1453,7 @@
                 });
             }
 
-            // ===== PORTFOLIO FILTER =====
+            // PORTFOLIO FILTER
             var filterBtns = document.querySelectorAll('.filter-btn');
             var portfolioItems = document.querySelectorAll('.portfolio-item');
 
@@ -1501,7 +1470,7 @@
                 });
             });
 
-            // ===== SKILL BAR ANIMATION =====
+            // SKILL BAR ANIMATION
             var skillBars = document.querySelectorAll('.skill-progress');
 
             function animateSkills() {
@@ -1525,7 +1494,7 @@
             setTimeout(animateSkills, 300);
             window.addEventListener('scroll', animateSkills, { passive: true });
 
-            // ===== CONTACT FORM =====
+            // CONTACT FORM
             var contactForm = document.getElementById('contactForm');
             var submitBtn = document.getElementById('submitBtn');
             var formStatus = document.getElementById('formStatus');
